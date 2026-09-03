@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notificationApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -15,12 +15,15 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState("");
 
-  const load = (nextPage = page) => {
-    notificationApi
-      .list(token, { page: nextPage, limit: 20 })
-      .then(setData)
-      .catch((err) => setError(err.message));
-  };
+  const load = useCallback(
+    (nextPage = page) => {
+      notificationApi
+        .list(token, { page: nextPage, limit: 20 })
+        .then(setData)
+        .catch((err) => setError(err.message));
+    },
+    [token, page]
+  );
 
   useEffect(() => {
     load(page);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { dashboardApi, orderApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -113,12 +113,15 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [saving, setSaving] = useState("");
 
-  const load = (nextPage = page) => {
-    dashboardApi
-      .get(token, { page: nextPage, limit: 8 })
-      .then(setData)
-      .catch((err) => setError(err.message));
-  };
+  const load = useCallback(
+    (nextPage = page) => {
+      dashboardApi
+        .get(token, { page: nextPage, limit: 8 })
+        .then(setData)
+        .catch((err) => setError(err.message));
+    },
+    [token, page]
+  );
 
   useEffect(() => {
     load(page);

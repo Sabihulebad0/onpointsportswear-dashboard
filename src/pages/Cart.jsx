@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cartApi, productApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
 import "./Cart.css";
@@ -12,7 +12,7 @@ export default function Cart() {
   const [couponCode, setCouponCode] = useState("");
   const [error, setError] = useState("");
 
-  const load = () => {
+  const load = useCallback(() => {
     cartApi
       .get(token)
       .then((next) => {
@@ -20,7 +20,7 @@ export default function Cart() {
         setCouponCode(next.couponCode || "");
       })
       .catch((err) => setError(err.message));
-  };
+  }, [token]);
 
   useEffect(() => {
     load();

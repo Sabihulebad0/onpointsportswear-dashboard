@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -27,12 +27,12 @@ export default function Users() {
     permissions: [],
   });
 
-  const load = () => {
+  const load = useCallback(() => {
     userApi
       .list(token)
       .then(setData)
       .catch((err) => setError(err.message));
-  };
+  }, [token]);
 
   useEffect(() => {
     load();

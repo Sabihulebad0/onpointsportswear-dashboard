@@ -56,13 +56,13 @@ export default function Products() {
   const [error, setError] = useState("");
   const [createOpen, setCreateOpen] = useState(searchParams.get("new") === "1");
 
-  const closeCreate = () => {
+  const closeCreate = useCallback(() => {
     setCreateOpen(false);
     if (searchParams.get("new")) {
       searchParams.delete("new");
       setSearchParams(searchParams, { replace: true });
     }
-  };
+  }, [searchParams, setSearchParams]);
 
   const load = useCallback(
     (nextPage = page) => {

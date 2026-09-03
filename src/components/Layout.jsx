@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { notificationApi } from "../api/client";
 import logo from "../assets/logo.png";
@@ -109,7 +109,7 @@ export default function Layout() {
     setNotifyOpen(false);
   }, [pathname]);
 
-  const loadNotes = () => {
+  const loadNotes = useCallback(() => {
     if (!token) return;
     notificationApi
       .list(token, { limit: 8, page: 1 })
@@ -118,7 +118,7 @@ export default function Layout() {
         setUnread(Number(data.unreadCount || 0));
       })
       .catch(() => {});
-  };
+  }, [token]);
 
   useEffect(() => {
     if (!token) return;
