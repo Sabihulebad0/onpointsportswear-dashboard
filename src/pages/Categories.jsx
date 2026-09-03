@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
 import { categoryApi, productApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
 import {
   IconDots,
-  IconEye,
-  IconImage,
   IconPencil,
   IconPlusCircle,
   IconSearch,

@@ -122,7 +122,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     load(page);
-  }, [token, page]);
+  }, [token, page, load]);
 
   const slices = useMemo(
     () =>

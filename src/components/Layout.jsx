@@ -9,7 +9,6 @@ import {
   IconBag,
   IconBell,
   IconBox,
-  IconCart,
   IconGrid,
   IconSearch,
   IconSliders,
@@ -131,7 +130,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (notifyOpen) loadNotes();
-  }, [notifyOpen, token]);
+  }, [notifyOpen, token, loadNotes]);
 
   useEffect(() => {
     const onKey = (event) => {

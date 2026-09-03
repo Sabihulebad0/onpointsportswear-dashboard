@@ -36,7 +36,7 @@ export default function Users() {
 
   useEffect(() => {
     load();
-  }, [token]);
+  }, [token, load]);
 
   if (!hasPermission("users:manage")) {
     return <div className="empty panel">You do not have permission to manage users.</div>;

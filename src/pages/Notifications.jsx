@@ -24,7 +24,7 @@ export default function Notifications() {
 
   useEffect(() => {
     load(page);
-  }, [token, page]);
+  }, [token, page, load]);
 
   const openItem = async (item) => {
     if (!item.isRead) await notificationApi.markRead(token, item._id, true).catch(() => {});

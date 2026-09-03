@@ -143,7 +143,7 @@ export default function Products() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [createOpen]);
+  }, [createOpen, closeCreate]);
 
   const categoryName = useMemo(
     () => categories.find((item) => item._id === category)?.name || "",

@@ -31,7 +31,7 @@ export default function Cart() {
         if (data.products?.[0]) setProductId(data.products[0]._id);
       })
       .catch((err) => setError(err.message));
-  }, [token]);
+  }, [token, load]);
 
   const onAdd = async (event) => {
     event.preventDefault();
