@@ -1,0 +1,496 @@
+/* Shared shell for the data-table pages (products, categories): page head,
+   filter toolbar, table, row menu and pager. */
+
+.list-page {
+  display: grid;
+  gap: 14px;
+  color: #111827;
+}
+
+.pr-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.pr-sub {
+  margin: -8px 0 0;
+  color: #6b7280;
+}
+
+.pr-actions,
+.pr-toolbar,
+.pr-pager,
+.pr-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.list-page .pr-btn,
+.list-page .pr-import {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.list-page .pr-btn svg,
+.list-page .pr-import svg {
+  width: 15px;
+  height: 15px;
+}
+
+.list-page .pr-btn--orange,
+.list-page .pr-btn--orange:hover {
+  background: #f97316;
+  border-color: #f97316;
+  color: #fff;
+}
+
+.list-page .pr-btn--dark,
+.list-page .pr-btn--dark:hover {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
+.list-page .pr-btn--accent,
+.list-page .pr-btn--accent:hover {
+  background: #00AB3A;
+  border-color: #00AB3A;
+  color: #fff;
+}
+
+.list-page .pr-btn--accent:hover {
+  background: #009632;
+  border-color: #009632;
+}
+
+.list-page .pr-btn:disabled {
+  opacity: 0.45;
+}
+
+.pr-alert {
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.pr-notice {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.pr-toolbar {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.pr-toolbar input,
+.pr-pop input,
+.pr-pager select {
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 10px;
+  min-width: 0;
+}
+
+.pr-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 1 320px;
+  min-width: 200px;
+}
+
+.pr-search svg {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.pr-search input {
+  width: 100%;
+  padding-left: 36px;
+}
+
+.pr-filter {
+  position: relative;
+}
+
+.list-page .pr-chip {
+  height: 38px;
+  padding: 0 14px;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.list-page .pr-chip svg {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+}
+
+.list-page .pr-chip.is-on {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.list-page .pr-chip.is-on svg {
+  color: var(--accent);
+}
+
+.pr-pop {
+  position: absolute;
+  z-index: 6;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+}
+
+.list-page .pr-pop-item {
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-weight: 500;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.list-page .pr-pop-item:hover {
+  background: #f9fafb;
+}
+
+.list-page .pr-pop-item.is-on {
+  background: #eafaf0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pr-pop--price {
+  display: grid;
+  gap: 10px;
+  width: 250px;
+  padding: 12px;
+  overflow: visible;
+}
+
+.pr-pop-row {
+  display: flex;
+  gap: 8px;
+}
+
+.pr-pop-row > * {
+  flex: 1;
+}
+
+.pr-bulk {
+  position: relative;
+}
+
+.pr-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  min-width: 160px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.pr-menu button,
+.pr-menu a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 0;
+  background: #fff;
+  color: #111827;
+  text-align: left;
+}
+
+.pr-menu button:hover,
+.pr-menu a:hover {
+  background: #f9fafb;
+}
+
+.pr-row-menu {
+  position: fixed;
+  z-index: 40;
+  min-width: 168px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
+  display: grid;
+  gap: 2px;
+}
+
+.list-page .pr-row-menu a,
+.list-page .pr-row-menu button {
+  width: 100%;
+  padding: 9px 10px;
+  gap: 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.list-page .pr-row-menu a svg,
+.list-page .pr-row-menu button svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: #6b7280;
+}
+
+.list-page .pr-row-menu a:hover,
+.list-page .pr-row-menu button:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.list-page .pr-row-menu .is-danger,
+.list-page .pr-row-menu .is-danger svg {
+  color: #dc2626;
+}
+
+.list-page .pr-row-menu .is-danger:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+.list-page .pr-row-menu button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pr-table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.list-page .pr-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.list-page .pr-table th,
+.list-page .pr-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 13px;
+  background: #fff;
+}
+
+.list-page .pr-table th {
+  color: #6b7280;
+  font-size: 12px;
+  background: #fafafa;
+}
+
+.list-page .pr-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.pr-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.pr-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pr-name img,
+.pr-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f3f4f6;
+  display: block;
+}
+
+.pr-status {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pr-status.is-selling {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.pr-status.is-sold {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.list-page .pr-icon {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #4b5563;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  text-decoration: none;
+}
+
+.list-page .pr-icon svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+}
+
+.list-page .pr-icon:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+.list-page .pr-icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.list-page .pr-icon.is-open {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* The hover selectors keep the global `button:hover` accent fill from
+   winning over these backgrounds. */
+.list-page .pr-switch,
+.list-page .pr-switch:hover {
+  width: 42px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #e5e7eb;
+  position: relative;
+  padding: 0;
+}
+
+.pr-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s ease;
+}
+
+.list-page .pr-switch.is-off,
+.list-page .pr-switch.is-off:hover {
+  background: #f472b6;
+}
+
+.list-page .pr-switch.is-on.is-blue,
+.list-page .pr-switch.is-on.is-blue:hover {
+  background: #38bdf8;
+}
+
+.list-page .pr-switch.is-on.is-pink,
+.list-page .pr-switch.is-on.is-pink:hover {
+  background: #f472b6;
+}
+
+.pr-switch.is-on::after {
+  transform: translateX(18px);
+}
+
+.pr-empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 28px 12px;
+}
+
+.pr-foot {
+  justify-content: space-between;
+}
+
+.pr-foot p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.list-page .pr-pager button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .pr-head,
+  .pr-foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

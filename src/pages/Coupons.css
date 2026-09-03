@@ -1,0 +1,102 @@
+.coupons-page .pr-table {
+  min-width: 1080px;
+}
+
+.coupons-page .pr-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.coupons-page .pr-view {
+  margin-left: auto;
+}
+
+.coupons-page .cp-code {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.coupons-page .cp-status {
+  display: inline-flex;
+  align-items: center;
+  min-width: 72px;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.coupons-page .cp-status.is-active {
+  background: #10b981;
+}
+
+.coupons-page .cp-status.is-expired {
+  background: #ef4444;
+}
+
+.coupons-page .cp-status.is-scheduled {
+  background: #6366f1;
+}
+
+.coupons-page .cp-status.is-off {
+  background: #9ca3af;
+}
+
+.coupons-page .sort-btn,
+.coupons-page .sort-btn:hover {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.coupons-page .sort-mark {
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.coupons-page .sort-btn.is-on .sort-mark {
+  color: var(--accent);
+}
+
+.coupons-page .pr-view .pr-pop {
+  left: auto;
+  right: 0;
+}
+
+.coupons-page .pr-name span.pr-thumb {
+  display: grid;
+  place-items: center;
+  color: #cbd5e1;
+}
+
+.coupons-page .pr-name span.pr-thumb svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cp-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-preview img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f3f4f6;
+}

@@ -1,0 +1,15 @@
+.attributes-page .attr-toolbar {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+.attributes-page .attr-toolbar input { max-width: 260px; flex: 0 1 260px; }
+.attributes-page .attr-toolbar select { max-width: 200px; }
+.attributes-page .tick-col { width: 44px; }
+.attributes-page .tick-col input[type="checkbox"] { width: 16px; height: 16px; }
+.attributes-page .values-cell { display: flex; align-items: center; gap: 10px; }
+.attributes-page .values-cell .cell-sub { margin: 0; }
+
+.value-input { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+.value-input input { flex: 1; }

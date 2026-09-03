@@ -1,0 +1,48 @@
+.categories-page .pr-table {
+  min-width: 860px;
+}
+
+.categories-page .cat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f9fafb;
+  display: block;
+}
+
+.categories-page .cat-icon.is-empty {
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e7eb;
+  color: #cbd5e1;
+}
+
+.categories-page .cat-icon.is-empty svg {
+  width: 16px;
+  height: 16px;
+}
+
+.categories-page .cat-desc {
+  color: #0ea5e9;
+  max-width: 320px;
+}
+
+.categories-page .cell-sub {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.cat-icon-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cat-icon-preview img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f3f4f6;
+}

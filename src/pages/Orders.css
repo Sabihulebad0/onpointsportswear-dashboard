@@ -1,0 +1,171 @@
+.orders-page .pr-table {
+  min-width: 1180px;
+}
+
+.orders-page .pr-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.orders-page .pr-view {
+  margin-left: auto;
+}
+
+.orders-page .od-dates {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.orders-page .od-dates input {
+  width: 148px;
+}
+
+.list-page .pr-btn--red,
+.list-page .pr-btn--red:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.list-page .pr-btn--red:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.orders-page .od-invoice {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: #111827;
+}
+
+.orders-page .od-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.orders-page .od-guest {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #facc15;
+  color: #713f12;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.orders-page .od-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.orders-page .od-status.is-pending,
+.orders-page .od-action.is-pending {
+  background: #f97316;
+}
+
+.orders-page .od-status.is-paid,
+.orders-page .od-action.is-paid {
+  background: #3b82f6;
+}
+
+.orders-page .od-status.is-shipped,
+.orders-page .od-action.is-shipped {
+  background: #14b8a6;
+}
+
+.orders-page .od-status.is-delivered,
+.orders-page .od-action.is-delivered {
+  background: #10b981;
+}
+
+.orders-page .od-status.is-cancelled,
+.orders-page .od-action.is-cancelled {
+  background: #ef4444;
+}
+
+.orders-page .od-status.is-returned,
+.orders-page .od-action.is-returned {
+  background: #f59e0b;
+}
+
+.orders-page .od-status.is-refunded,
+.orders-page .od-action.is-refunded {
+  background: #6366f1;
+}
+
+.orders-page .od-action,
+.orders-page .od-action:hover {
+  min-width: 148px;
+  height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.orders-page .od-delivery {
+  display: grid;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.orders-page .od-assign,
+.orders-page .od-assign:hover,
+.orders-page .od-unassign,
+.orders-page .od-unassign:hover {
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-weight: 600;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.orders-page .od-assign,
+.orders-page .od-assign:hover {
+  color: #2563eb;
+}
+
+.orders-page .od-unassign,
+.orders-page .od-unassign:hover {
+  color: #dc2626;
+}
+
+.orders-page .od-assign svg,
+.orders-page .od-unassign svg {
+  width: 14px;
+  height: 14px;
+}
+
+.orders-page .od-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.orders-page .history-pop {
+  min-width: 220px;
+  padding: 10px;
+}
+
+.orders-page .history-pop p {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.orders-page .courier-pick {
+  min-width: 220px;
+}

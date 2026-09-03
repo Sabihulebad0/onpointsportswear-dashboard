@@ -1,0 +1,302 @@
+.invoice-page {
+  display: grid;
+  gap: 16px;
+}
+
+.inv-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.inv-back {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.inv-toolbar select {
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 12px;
+}
+
+.invoice-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.inv-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.inv-kicker {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.inv-status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.inv-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.inv-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.inv-badge.is-pending { background: #f97316; }
+.inv-badge.is-paid { background: #3b82f6; }
+.inv-badge.is-shipped { background: #14b8a6; }
+.inv-badge.is-delivered { background: #10b981; }
+.inv-badge.is-cancelled { background: #ef4444; }
+.inv-badge.is-returned { background: #f59e0b; }
+.inv-badge.is-refunded { background: #6366f1; }
+
+.inv-store {
+  text-align: right;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.inv-store p {
+  margin: 8px 0 0;
+}
+
+.inv-brand {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  color: #111827;
+}
+
+.inv-brand img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.inv-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.inv-meta span,
+.inv-summary span,
+.inv-track-grid span {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.inv-meta strong,
+.inv-summary strong,
+.inv-track-grid strong {
+  color: #111827;
+}
+
+.inv-meta p,
+.inv-track-grid p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.inv-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inv-table th {
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+  background: #f8fafc;
+  padding: 12px 10px;
+}
+
+.inv-table th:nth-child(n + 3),
+.inv-table td.inv-num {
+  text-align: right;
+}
+
+.inv-table td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #111827;
+}
+
+.inv-table td.inv-amt {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.inv-variant {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.inv-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 0;
+  padding: 18px 20px;
+  background: #eef6ff;
+}
+
+.inv-grand strong {
+  color: #ef4444;
+  font-size: 22px;
+}
+
+.inv-tracking {
+  margin-top: 28px;
+}
+
+.inv-tracking h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.inv-tracking h3 svg {
+  width: 18px;
+  height: 18px;
+}
+
+.inv-track-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.inv-track-grid > div {
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.inv-track-id {
+  color: #e11d48;
+  word-break: break-all;
+}
+
+.inv-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.invoice-page .inv-btn,
+.invoice-page .inv-btn:hover {
+  flex: 1;
+  height: 46px;
+  gap: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: #00ab3a;
+  color: #fff;
+  font-weight: 700;
+}
+
+.invoice-page .inv-btn:hover {
+  background: #009632;
+}
+
+.invoice-page .inv-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 720px) {
+  .inv-head,
+  .inv-meta,
+  .inv-summary,
+  .inv-track-grid,
+  .inv-actions {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .inv-store,
+  .inv-brand {
+    text-align: left;
+    justify-content: flex-start;
+  }
+}
+
+@media print {
+  .app-sidebar,
+  .app-header,
+  .app-page-title,
+  .inv-toolbar,
+  .inv-actions,
+  .alert {
+    display: none !important;
+  }
+
+  .app-shell,
+  .app-main,
+  .app-content,
+  .invoice-page {
+    display: block !important;
+    background: #fff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .invoice-card {
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
+  }
+}

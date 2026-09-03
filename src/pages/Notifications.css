@@ -1,0 +1,143 @@
+.notes-page {
+  display: grid;
+  gap: 14px;
+}
+
+.notes-page__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notes-page__bar p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.notes-page__bar button,
+.notes-page__pager button,
+.notes-row__delete {
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  padding: 0 12px;
+}
+
+.notes-page__alert {
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.notes-page__list {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.notes-page__empty {
+  margin: 0;
+  padding: 36px 16px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.notes-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.notes-row__main {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  padding: 0;
+}
+
+.notes-row__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.notes-row__main small,
+.notes-row__meta {
+  display: block;
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+.notes-row__meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.notes-row__side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-row__delete {
+  width: 36px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: #9ca3af;
+}
+
+.note-badge {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: normal;
+  color: #fff;
+  background: #10b981;
+}
+
+.note-badge--order { background: #10b981; }
+.note-badge--product { background: #3b82f6; }
+.note-badge--user { background: #8b5cf6; }
+.note-badge--coupon { background: #f59e0b; }
+.note-badge--cart { background: #0d9488; }
+.note-badge--system { background: #6b7280; }
+
+.note-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111;
+  display: inline-block;
+}
+
+.notes-page__pager {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .notes-row {
+    align-items: flex-start;
+  }
+}

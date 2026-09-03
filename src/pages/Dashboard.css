@@ -1,0 +1,372 @@
+.dashboard-page {
+  display: grid;
+  gap: 20px;
+  color: #1f2937;
+}
+
+.dashboard-page * {
+  box-sizing: border-box;
+}
+
+.dash-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.dash-alert {
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.dash-sales {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dash-sale {
+  border-radius: 14px;
+  padding: 18px 16px;
+  color: #fff;
+  min-height: 118px;
+}
+
+.dash-sale p,
+.dash-count p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dash-sale strong,
+.dash-count strong {
+  display: block;
+  margin: 10px 0 8px;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+
+.dash-sale div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 11px;
+  opacity: 0.92;
+}
+
+.dash-sale--today {
+  background: linear-gradient(135deg, #60a5fa, #6366f1);
+}
+
+.dash-sale--yesterday {
+  background: linear-gradient(135deg, #34d399, #84cc16);
+}
+
+.dash-sale--month {
+  background: linear-gradient(135deg, #fb7185, #ef4444);
+}
+
+.dash-sale--last {
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+}
+
+.dash-sale--all {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+
+.dash-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dash-count {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.dash-count__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.dash-count__icon--orange { background: #ffedd5; }
+.dash-count__icon--blue { background: #dbeafe; }
+.dash-count__icon--purple { background: #ede9fe; }
+.dash-count__icon--green { background: #dcfce7; }
+
+.dash-count p em {
+  margin-left: 8px;
+  font-style: normal;
+  background: #fecaca;
+  color: #b91c1c;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.dash-charts {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 14px;
+}
+
+.dash-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  padding: 16px 18px 12px;
+  min-width: 0;
+}
+
+.dash-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.dash-card__head h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.dash-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.dashboard-page .dash-tabs button {
+  height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.dashboard-page .dash-tabs button.is-active,
+.dashboard-page .dash-tabs button.is-active:hover {
+  background: #10b981;
+  color: #fff;
+}
+
+.dashboard-page .dash-tabs button:hover {
+  background: #e5e7eb;
+}
+
+.dash-chart-svg,
+.dash-pie-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dash-chart-grid {
+  stroke: #f3f4f6;
+  stroke-width: 1;
+}
+
+.dash-chart-axis {
+  fill: #9ca3af;
+  font-size: 10px;
+}
+
+.dash-chart-fill {
+  fill: rgba(16, 185, 129, 0.12);
+}
+
+.dash-chart-line {
+  fill: none;
+  stroke: #10b981;
+  stroke-width: 2.5;
+}
+
+.dash-chart-dot {
+  fill: #10b981;
+}
+
+.dash-pie-wrap {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px;
+  align-items: center;
+  min-height: 220px;
+}
+
+.dash-pie-track {
+  fill: none;
+  stroke: #f3f4f6;
+  stroke-width: 22;
+}
+
+.dash-pie-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.dash-pie-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.dash-pie-legend span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dash-empty {
+  color: #9ca3af;
+  text-align: center;
+  padding: 28px 12px;
+}
+
+.dash-table-wrap {
+  overflow-x: auto;
+}
+
+.dashboard-page .dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 860px;
+}
+
+.dashboard-page .dash-table th,
+.dashboard-page .dash-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 13px;
+  background: #fff;
+}
+
+.dashboard-page .dash-table th {
+  color: #9ca3af;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #fafafa;
+}
+
+.dash-status {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.dash-status--ok { background: #dcfce7; color: #15803d; }
+.dash-status--bad { background: #fee2e2; color: #b91c1c; }
+.dash-status--warn { background: #ffedd5; color: #c2410c; }
+.dash-status--info { background: #dbeafe; color: #1d4ed8; }
+
+.dashboard-page .dash-select {
+  height: 34px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 8px;
+  width: 120px;
+  color: #111;
+}
+
+.dash-invoice {
+  display: flex;
+  gap: 6px;
+}
+
+.dashboard-page .dash-icon-btn,
+.dashboard-page a.dash-icon-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #4b5563;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.dashboard-page .dash-icon-btn:hover,
+.dashboard-page a.dash-icon-btn:hover {
+  background: #f9fafb;
+  color: #111;
+}
+
+.dash-pager {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 4px 4px;
+}
+
+.dashboard-page .dash-pager button {
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+}
+
+.dashboard-page .dash-pager button:disabled {
+  opacity: 0.45;
+}
+
+@media (max-width: 1200px) {
+  .dash-sales {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dash-sale--all {
+    grid-column: 1 / -1;
+  }
+
+  .dash-counts,
+  .dash-charts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .dash-sales,
+  .dash-counts,
+  .dash-charts,
+  .dash-pie-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-sale--all {
+    grid-column: auto;
+  }
+
+  .dash-title {
+    font-size: 22px;
+  }
+}
