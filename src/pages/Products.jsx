@@ -12,17 +12,19 @@ import {
   IconX,
 } from "../components/Icons.jsx";
 import ProductForm from "./ProductForm.jsx";
+import { ITEM_TYPES, typeLabel } from "../constants/productOptions.js";
 import "../styles/list-page.css";
 import "./Products.css";
 
 const money = (value) => `$${Number(value || 0).toFixed(2)}`;
 
 const toCsv = (products) => {
-  const header = ["name", "sku", "category", "price", "sale_price", "stock", "status", "published", "featured"];
+  const header = ["name", "sku", "category", "type", "price", "sale_price", "stock", "status", "published", "featured"];
   const rows = products.map((product) => [
     product.name,
     product.sku || "",
     product.category?.name || "",
+    product.type || "standard",
     product.originalPrice ?? product.price,
     product.salePrice ?? product.price,
     product.stock,
@@ -41,6 +43,7 @@ export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
@@ -56,13 +59,13 @@ export default function Products() {
   const [error, setError] = useState("");
   const [createOpen, setCreateOpen] = useState(searchParams.get("new") === "1");
 
-  const closeCreate = useCallback(() => {
+  const closeCreate = () => {
     setCreateOpen(false);
     if (searchParams.get("new")) {
       searchParams.delete("new");
       setSearchParams(searchParams, { replace: true });
     }
-  }, [searchParams, setSearchParams]);
+  };
 
   const load = useCallback(
     (nextPage = page) => {
@@ -70,6 +73,7 @@ export default function Products() {
         .list(token, {
           search: search.trim(),
           category,
+          type: typeFilter,
           minPrice: priceRange.min,
           maxPrice: priceRange.max,
           page: nextPage,
@@ -81,7 +85,7 @@ export default function Products() {
         })
         .catch((err) => setError(err.message));
     },
-    [token, search, category, priceRange, limit, page]
+    [token, search, category, typeFilter, priceRange, limit, page]
   );
 
   useEffect(() => {
@@ -143,7 +147,7 @@ export default function Products() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [createOpen, closeCreate]);
+  }, [createOpen]);
 
   const categoryName = useMemo(
     () => categories.find((item) => item._id === category)?.name || "",
@@ -220,6 +224,7 @@ export default function Products() {
       const result = await productApi.list(token, {
         search: search.trim(),
         category,
+        type: typeFilter,
         minPrice: priceRange.min,
         maxPrice: priceRange.max,
         page: 1,
@@ -368,6 +373,47 @@ export default function Products() {
         <div className="pr-filter">
           <button
             type="button"
+            className={typeFilter ? "pr-chip is-on" : "pr-chip"}
+            aria-expanded={openFilter === "type"}
+            onClick={() => setOpenFilter(openFilter === "type" ? "" : "type")}
+          >
+            <IconPlusCircle />
+            {typeFilter ? typeLabel(typeFilter) : "Type"}
+          </button>
+          {openFilter === "type" ? (
+            <div className="pr-pop">
+              <button
+                type="button"
+                className={!typeFilter ? "pr-pop-item is-on" : "pr-pop-item"}
+                onClick={() => {
+                  setTypeFilter("");
+                  setPage(1);
+                  setOpenFilter("");
+                }}
+              >
+                All types
+              </button>
+              {ITEM_TYPES.map((item) => (
+                <button
+                  key={item.value}
+                  type="button"
+                  className={typeFilter === item.value ? "pr-pop-item is-on" : "pr-pop-item"}
+                  onClick={() => {
+                    setTypeFilter(item.value);
+                    setPage(1);
+                    setOpenFilter("");
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="pr-filter">
+          <button
+            type="button"
             className={priceRange.min || priceRange.max ? "pr-chip is-on" : "pr-chip"}
             aria-expanded={openFilter === "price"}
             onClick={() => {
@@ -431,6 +477,7 @@ export default function Products() {
               </th>
               <th>Product name</th>
               <th>Category</th>
+              <th>Type</th>
               <th>Price</th>
               <th>Sale price</th>
               <th>Stock</th>
@@ -444,7 +491,7 @@ export default function Products() {
           <tbody>
             {data.products.length === 0 ? (
               <tr>
-                <td colSpan={11} className="pr-empty">
+                <td colSpan={12} className="pr-empty">
                   No products match this view.
                 </td>
               </tr>
@@ -461,6 +508,7 @@ export default function Products() {
                     </div>
                   </td>
                   <td>{product.category?.name || "—"}</td>
+                  <td>{typeLabel(product.type || product.category?.type)}</td>
                   <td>{money(product.originalPrice ?? product.price)}</td>
                   <td>{money(product.salePrice ?? product.price)}</td>
                   <td>{product.stock}</td>

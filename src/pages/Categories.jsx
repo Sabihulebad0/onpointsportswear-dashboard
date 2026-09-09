@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import { categoryApi, productApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
 import {
   IconDots,
+  IconEye,
+  IconImage,
   IconPencil,
   IconPlusCircle,
   IconSearch,
@@ -12,11 +15,13 @@ import {
 } from "../components/Icons.jsx";
 import "../styles/list-page.css";
 import "./Categories.css";
+import { ITEM_TYPES, typeLabel } from "../constants/productOptions.js";
 
 const blank = {
   name: "",
   description: "",
   parent: "",
+  type: "standard",
   discountPercent: "0",
   isActive: true,
   couponCode: "",
@@ -30,6 +35,7 @@ const toForm = (category) => ({
   name: category.name || "",
   description: category.description || "",
   parent: category.parent ? String(category.parent._id || category.parent) : "",
+  type: category.type || "standard",
   discountPercent: String(category.discountPercent ?? 0),
   isActive: category.isActive !== false,
   couponCode: category.coupons?.[0]?.code || "",
@@ -38,10 +44,11 @@ const toForm = (category) => ({
 });
 
 const toCsv = (categories) => {
-  const header = ["id", "name", "description", "parent", "discount_percent", "published", "products"];
+  const header = ["id", "name", "type", "description", "parent", "discount_percent", "published", "products"];
   const rows = categories.map((item) => [
     item._id,
     item.name,
+    item.type || "standard",
     item.description || "",
     item.parentName || "",
     item.discountPercent || 0,
@@ -59,6 +66,7 @@ export default function Categories() {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const [published, setPublished] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [childOf, setChildOf] = useState("");
   const [openFilter, setOpenFilter] = useState("");
   const [selected, setSelected] = useState([]);
@@ -156,13 +164,14 @@ export default function Categories() {
       if (term && !`${item.name} ${item.description}`.toLowerCase().includes(term)) return false;
       if (published === "yes" && item.isActive === false) return false;
       if (published === "no" && item.isActive !== false) return false;
+      if (typeFilter && (item.type || "standard") !== typeFilter) return false;
       if (childOf === "top" && item.parent) return false;
       if (childOf && childOf !== "top" && String(item.parent?._id || item.parent || "") !== childOf) {
         return false;
       }
       return true;
     });
-  }, [items, search, published, childOf]);
+  }, [items, search, published, childOf, typeFilter]);
 
   const pages = Math.max(Math.ceil(filtered.length / limit), 1);
   const currentPage = Math.min(page, pages);
@@ -227,6 +236,7 @@ export default function Categories() {
       data.append("name", form.name);
       data.append("description", form.description);
       data.append("parent", form.parent || "");
+      data.append("type", form.type || "standard");
       data.append("discountPercent", String(Number(form.discountPercent || 0)));
       data.append("isActive", form.isActive ? "true" : "false");
       data.append("couponCode", form.couponCode);
@@ -317,6 +327,7 @@ export default function Categories() {
         await categoryApi.create(token, {
           name: cols[nameIdx],
           description: descIdx >= 0 ? cols[descIdx] : "",
+          type: header.indexOf("type") >= 0 ? cols[header.indexOf("type")] : "standard",
         });
       }
       load();
@@ -368,6 +379,16 @@ export default function Categories() {
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                 />
+              </label>
+              <label>
+                Type
+                <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+                  {ITEM_TYPES.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
               </label>
               <div className="two">
                 <label>
@@ -569,6 +590,47 @@ export default function Categories() {
         <div className="pr-filter">
           <button
             type="button"
+            className={typeFilter ? "pr-chip is-on" : "pr-chip"}
+            aria-expanded={openFilter === "type"}
+            onClick={() => setOpenFilter(openFilter === "type" ? "" : "type")}
+          >
+            <IconPlusCircle />
+            {typeFilter ? typeLabel(typeFilter) : "Type"}
+          </button>
+          {openFilter === "type" ? (
+            <div className="pr-pop">
+              <button
+                type="button"
+                className={!typeFilter ? "pr-pop-item is-on" : "pr-pop-item"}
+                onClick={() => {
+                  setTypeFilter("");
+                  setPage(1);
+                  setOpenFilter("");
+                }}
+              >
+                All types
+              </button>
+              {ITEM_TYPES.map((item) => (
+                <button
+                  key={item.value}
+                  type="button"
+                  className={typeFilter === item.value ? "pr-pop-item is-on" : "pr-pop-item"}
+                  onClick={() => {
+                    setTypeFilter(item.value);
+                    setPage(1);
+                    setOpenFilter("");
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="pr-filter">
+          <button
+            type="button"
             className={childOf ? "pr-chip is-on" : "pr-chip"}
             aria-expanded={openFilter === "children"}
             onClick={() => setOpenFilter(openFilter === "children" ? "" : "children")}
@@ -633,6 +695,7 @@ export default function Categories() {
               <th>ID</th>
               {/* <th>Icon</th> */}
               <th>Name</th>
+              <th>Type</th>
               <th>Description</th>
               <th>Products</th>
               <th>Published</th>
@@ -642,7 +705,7 @@ export default function Categories() {
           <tbody>
             {visible.length === 0 ? (
               <tr>
-                <td colSpan={8} className="pr-empty">
+                <td colSpan={9} className="pr-empty">
                   No categories match this view.
                 </td>
               </tr>
@@ -676,6 +739,7 @@ export default function Categories() {
                     <strong>{item.name}</strong>
                     {item.parentName ? <div className="cell-sub">in {item.parentName}</div> : null}
                   </td>
+                  <td>{typeLabel(item.type)}</td>
                   <td className="cat-desc">{item.description || "—"}</td>
                   <td>{item.productCount ?? 0}</td>
                   <td>

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { categoryApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
+import { ITEM_TYPES } from "../constants/productOptions.js";
 import "./CategoryEdit.css";
 
 const toForm = (category) => ({
   name: category.name || "",
   description: category.description || "",
+  type: category.type || "standard",
   discountPercent: String(category.discountPercent ?? 0),
   couponCode: category.coupons?.[0]?.code || "",
   couponType: category.coupons?.[0]?.type || "percent",
@@ -21,7 +23,7 @@ export default function CategoryEdit() {
   const [form, setForm] = useState(() =>
     location.state?.category
       ? toForm(location.state.category)
-      : { name: "", description: "", discountPercent: "0", couponCode: "", couponType: "percent", couponAmount: "" }
+      : { name: "", description: "", type: "standard", discountPercent: "0", couponCode: "", couponType: "percent", couponAmount: "" }
   );
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -49,6 +51,7 @@ export default function CategoryEdit() {
       await categoryApi.update(token, id, {
         name: form.name,
         description: form.description,
+        type: form.type,
         discountPercent: Number(form.discountPercent || 0),
         couponCode: form.couponCode,
         couponType: form.couponType,
@@ -77,6 +80,16 @@ export default function CategoryEdit() {
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
+        </label>
+        <label>
+          Type
+          <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+            {ITEM_TYPES.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Discount %

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { categoryApi } from "../api/client";
+import { typeLabel } from "../constants/productOptions.js";
 import "./CategoryView.css";
 
 const when = (value) => (value ? new Date(value).toLocaleString() : "—");
@@ -50,6 +51,10 @@ export default function CategoryView() {
           <div>
             <dt>Slug</dt>
             <dd>{category.slug}</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>{typeLabel(category.type)}</dd>
           </div>
           <div>
             <dt>Discount</dt>

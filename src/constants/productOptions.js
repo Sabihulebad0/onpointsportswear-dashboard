@@ -1,5 +1,13 @@
 export const SIZE_OPTIONS = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "One Size"];
 
+export const ITEM_TYPES = [
+  { value: "standard", label: "Standard" },
+  { value: "customizable", label: "Customizable" },
+];
+
+export const typeLabel = (value) =>
+  ITEM_TYPES.find((item) => item.value === value)?.label || "Standard";
+
 export const COLOR_OPTIONS = [
   { name: "Black", value: "#111111" },
   { name: "White", value: "#f5f5f5" },

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -27,16 +27,16 @@ export default function Users() {
     permissions: [],
   });
 
-  const load = useCallback(() => {
+  const load = () => {
     userApi
       .list(token)
       .then(setData)
       .catch((err) => setError(err.message));
-  }, [token]);
+  };
 
   useEffect(() => {
     load();
-  }, [token, load]);
+  }, [token]);
 
   if (!hasPermission("users:manage")) {
     return <div className="empty panel">You do not have permission to manage users.</div>;

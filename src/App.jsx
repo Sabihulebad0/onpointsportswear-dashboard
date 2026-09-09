@@ -18,9 +18,12 @@ import Cart from "./pages/Cart.jsx";
 import Coupons from "./pages/Coupons.jsx";
 import Users from "./pages/Users.jsx";
 import UserEdit from "./pages/UserEdit.jsx";
+import Customers from "./pages/Customers.jsx";
+import CustomerOrders from "./pages/CustomerOrders.jsx";
 import Search from "./pages/Search.jsx";
 import Notifications from "./pages/Notifications.jsx";
 import Attributes from "./pages/Attributes.jsx";
+import Contacts from "./pages/Contacts.jsx";
 
 function Protected({ children }) {
   const { loading, token, canAccessAdmin } = useAuth();
@@ -139,6 +142,38 @@ export default function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/:id" element={<OrderView />} />
+        <Route
+          path="/customers"
+          element={
+            <StaffOnly>
+              <Customers />
+            </StaffOnly>
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <StaffOnly>
+              <Contacts />
+            </StaffOnly>
+          }
+        />
+        <Route
+          path="/contacts/:id"
+          element={
+            <StaffOnly>
+              <Contacts />
+            </StaffOnly>
+          }
+        />
+        <Route
+          path="/customers/:id/orders"
+          element={
+            <StaffOnly>
+              <CustomerOrders />
+            </StaffOnly>
+          }
+        />
         <Route
           path="/cart"
           element={

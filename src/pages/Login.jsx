@@ -8,7 +8,7 @@ import "./Login.css";
 export default function Login() {
   const { token, canAccessAdmin, user, login, submitting, error, clearFeedback } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("admin@gmail.com");
+  const [email, setEmail] = useState("admin@sports.com");
   const [password, setPassword] = useState("admin123");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Login() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             type="email"
-            placeholder="admin@gmail.com"
+            placeholder="admin@sports.com"
             required
           />
         </label>

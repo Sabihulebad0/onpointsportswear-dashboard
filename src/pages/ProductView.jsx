@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { productApi } from "../api/client";
-import { COLOR_OPTIONS } from "../constants/productOptions.js";
+import { COLOR_OPTIONS, typeLabel } from "../constants/productOptions.js";
 import "./ProductView.css";
 
 const dash = (value) => (value === 0 || value ? value : "—");
@@ -87,6 +87,7 @@ export default function ProductView() {
             <Field label="Sport">{product.sport || "—"}</Field>
             <Field label="Brand">{product.brand || "—"}</Field>
             <Field label="Category">{product.category?.name || "—"}</Field>
+            <Field label="Type">{typeLabel(product.type || product.category?.type)}</Field>
             <Field label="Category slug">{product.category?.slug || "—"}</Field>
             <Field label="Category discount">{product.category?.discountPercent || 0}%</Field>
             <Field label="Product discount">

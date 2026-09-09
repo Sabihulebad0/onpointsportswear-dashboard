@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { notificationApi } from "../api/client";
 import logo from "../assets/logo.png";
@@ -9,12 +9,14 @@ import {
   IconBag,
   IconBell,
   IconBox,
+  IconCart,
   IconGrid,
   IconSearch,
   IconSliders,
   IconTag,
   IconTicket,
   IconUsers,
+  IconMail,
 } from "./Icons.jsx";
 
 const titles = {
@@ -25,6 +27,8 @@ const titles = {
   "/categories": "Categories",
   "/attributes": "Attributes",
   "/orders": "Orders",
+  "/customers": "Customers",
+  "/contacts": "Contact inquiries",
   // "/cart": "Cart",
   "/coupons": "Coupon",
   "/users": "Users & access",
@@ -43,9 +47,13 @@ const pageTitle = (pathname) =>
           ? "Product details"
           : pathname.startsWith("/categories/")
             ? "Category details"
-            : pathname.startsWith("/orders/")
-              ? "Invoice"
-              : "Sports Admin");
+            : pathname.startsWith("/customers/") && pathname.endsWith("/orders")
+              ? "Customer Order List"
+              : pathname.startsWith("/contacts/")
+              ? "Inquiry"
+              : pathname.startsWith("/orders/")
+                ? "Invoice"
+                : "Sports Admin");
 
 export default function Layout() {
   const { user, token, logout, hasPermission, isDelivery } = useAuth();
@@ -79,6 +87,8 @@ export default function Layout() {
           { to: "/attributes", label: "Attributes", icon: IconSliders },
           { to: "/coupons", label: "Coupons", icon: IconTicket },
           { to: "/orders", label: "Orders", icon: IconBag, show: hasPermission("orders:read") },
+          { to: "/customers", label: "Customers", icon: IconUsers },
+          { to: "/contacts", label: "Contact Us", icon: IconMail },
           // { to: "/cart", label: "Cart", icon: IconCart },
           { to: "/users", label: "Users", icon: IconUsers, show: hasPermission("users:manage") },
         ]
@@ -109,7 +119,7 @@ export default function Layout() {
     setNotifyOpen(false);
   }, [pathname]);
 
-  const loadNotes = useCallback(() => {
+  const loadNotes = () => {
     if (!token) return;
     notificationApi
       .list(token, { limit: 8, page: 1 })
@@ -118,7 +128,7 @@ export default function Layout() {
         setUnread(Number(data.unreadCount || 0));
       })
       .catch(() => {});
-  }, [token]);
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -130,7 +140,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (notifyOpen) loadNotes();
-  }, [notifyOpen, token, loadNotes]);
+  }, [notifyOpen, token]);
 
   useEffect(() => {
     const onKey = (event) => {

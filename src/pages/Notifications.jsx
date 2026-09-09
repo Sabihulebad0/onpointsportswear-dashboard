@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notificationApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -15,19 +15,16 @@ export default function Notifications() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState("");
 
-  const load = useCallback(
-    (nextPage = page) => {
-      notificationApi
-        .list(token, { page: nextPage, limit: 20 })
-        .then(setData)
-        .catch((err) => setError(err.message));
-    },
-    [token, page]
-  );
+  const load = (nextPage = page) => {
+    notificationApi
+      .list(token, { page: nextPage, limit: 20 })
+      .then(setData)
+      .catch((err) => setError(err.message));
+  };
 
   useEffect(() => {
     load(page);
-  }, [token, page, load]);
+  }, [token, page]);
 
   const openItem = async (item) => {
     if (!item.isRead) await notificationApi.markRead(token, item._id, true).catch(() => {});
@@ -49,7 +46,7 @@ export default function Notifications() {
     <div className="notes-page">
       <div className="notes-page__bar">
         <p>{data.unreadCount} unread</p>
-        <button type="button" onClick={markAll}>
+        <button type="button" className="notes-page__mark" onClick={markAll}>
           Mark all read
         </button>
       </div>
@@ -59,10 +56,10 @@ export default function Notifications() {
           <p className="notes-page__empty">No notifications yet.</p>
         ) : (
           data.notifications.map((item) => (
-            <article key={item._id} className="notes-row">
+            <article key={item._id} className={`notes-row${item.isRead ? "" : " is-unread"}`}>
               <button type="button" className="notes-row__main" onClick={() => openItem(item)}>
                 <span className="notes-row__avatar">{(item.title || "N").slice(0, 1).toUpperCase()}</span>
-                <span>
+                <span className="notes-row__body">
                   <strong>{item.title}</strong>
                   {item.message ? <small>{item.message}</small> : null}
                   <span className="notes-row__meta">
@@ -72,8 +69,13 @@ export default function Notifications() {
                 </span>
               </button>
               <span className="notes-row__side">
-                {!item.isRead ? <i className="note-dot" /> : null}
-                <button type="button" className="notes-row__delete" onClick={() => removeItem(item._id)} aria-label="Delete">
+                <i className={`note-dot${item.isRead ? " is-off" : ""}`} aria-hidden="true" />
+                <button
+                  type="button"
+                  className="notes-row__delete"
+                  onClick={() => removeItem(item._id)}
+                  aria-label="Delete"
+                >
                   <IconTrash />
                 </button>
               </span>
@@ -82,13 +84,18 @@ export default function Notifications() {
         )}
       </div>
       <div className="notes-page__pager">
-        <button type="button" disabled={page <= 1} onClick={() => setPage((current) => current - 1)}>
+        <button type="button" className="notes-page__page-btn" disabled={page <= 1} onClick={() => setPage((current) => current - 1)}>
           Previous
         </button>
         <span>
           {page} / {data.pages || 1}
         </span>
-        <button type="button" disabled={page >= (data.pages || 1)} onClick={() => setPage((current) => current + 1)}>
+        <button
+          type="button"
+          className="notes-page__page-btn"
+          disabled={page >= (data.pages || 1)}
+          onClick={() => setPage((current) => current + 1)}
+        >
           Next
         </button>
       </div>

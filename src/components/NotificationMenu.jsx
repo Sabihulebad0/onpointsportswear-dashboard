@@ -9,6 +9,7 @@ const TYPE_LABEL = {
   user: "User",
   coupon: "Coupon",
   cart: "Cart",
+  contact: "Contact",
   system: "System",
 };
 

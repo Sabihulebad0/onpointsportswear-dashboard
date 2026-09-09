@@ -1,0 +1,123 @@
+.contacts-page .contacts-intro {
+  margin: 0 0 2px;
+}
+
+.contacts-page .od-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contacts-page .pr-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.contacts-status-filter {
+  display: flex;
+  align-items: center;
+}
+
+.contacts-status-filter select,
+.contacts-page .pr-pager select {
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 12px;
+  min-width: 160px;
+}
+
+.contacts-page .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cu-status {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.cu-status.is-new {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.cu-status.is-read {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.cu-status.is-replied {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.cu-status.is-archived {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.contact-modal .contact-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin: 0 0 16px;
+}
+
+.contact-modal .contact-meta dt {
+  color: #6b7280;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contact-modal .contact-meta dd {
+  margin: 4px 0 0;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.contact-message-label {
+  margin: 0 0 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.contact-message {
+  white-space: pre-wrap;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 14px;
+  margin: 0 0 16px;
+}
+
+.contact-modal .ghost {
+  color: #00ab3a;
+  background: transparent;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .contact-modal .contact-meta {
+    grid-template-columns: 1fr;
+  }
+}

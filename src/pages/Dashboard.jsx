@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { dashboardApi, orderApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -113,19 +113,16 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [saving, setSaving] = useState("");
 
-  const load = useCallback(
-    (nextPage = page) => {
-      dashboardApi
-        .get(token, { page: nextPage, limit: 8 })
-        .then(setData)
-        .catch((err) => setError(err.message));
-    },
-    [token, page]
-  );
+  const load = (nextPage = page) => {
+    dashboardApi
+      .get(token, { page: nextPage, limit: 8 })
+      .then(setData)
+      .catch((err) => setError(err.message));
+  };
 
   useEffect(() => {
     load(page);
-  }, [token, page, load]);
+  }, [token, page]);
 
   const slices = useMemo(
     () =>

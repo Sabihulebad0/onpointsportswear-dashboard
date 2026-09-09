@@ -139,6 +139,28 @@ export default function Search() {
           </ul>
         )}
       </section>
+      <section className="panel">
+        <div className="panel-head">
+          <h3>Contact inquiries</h3>
+        </div>
+        {(result.contacts || []).length === 0 ? (
+          <div className="empty">No inquiries</div>
+        ) : (
+          <ul className="product-list">
+            {result.contacts.map((item) => (
+              <li key={item._id}>
+                <div>
+                  <strong>{item.name}</strong>
+                  <p>
+                    {item.email} · {item.interestedIn || "Contact"}
+                  </p>
+                </div>
+                <Link to={`/contacts/${item._id}`}>Open</Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }

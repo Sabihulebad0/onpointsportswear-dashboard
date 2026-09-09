@@ -1,4 +1,11 @@
-const API_URL = process.env.REACT_APP_API_URL || "/api";
+const localApi = "http://127.0.0.1:5000/api";
+
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? localApi
+    : "/api");
 
 export class ApiError extends Error {
   constructor(message, status) {
@@ -18,7 +25,16 @@ export async function api(path, { method = "GET", body, token, formData } = {}) 
     body: formData || (body !== undefined ? JSON.stringify(body) : undefined),
   });
 
-  const data = await response.json().catch(() => ({}));
+  const contentType = response.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await response.json().catch(() => ({}))
+    : {};
+  if (!contentType.includes("application/json")) {
+    throw new ApiError(
+      "Cannot reach the API. Start the backend on port 5000, or set REACT_APP_API_URL and rebuild. The npm start proxy does not apply after npm run build.",
+      response.status
+    );
+  }
   if (!response.ok) {
     const fallback =
       response.status === 404
@@ -243,4 +259,34 @@ export const userApi = {
   updateAccess: (token, id, body) =>
     api(`/users/${id}/access`, { method: "PATCH", token, body }),
   remove: (token, id) => api(`/users/${id}`, { method: "DELETE", token }),
+};
+
+export const customerApi = {
+  list: (token, params = {}) => {
+    const query = new URLSearchParams(
+      Object.fromEntries(Object.entries(params).filter(([, value]) => value !== "" && value != null))
+    );
+    const suffix = query.toString() ? `?${query}` : "";
+    return api(`/customers${suffix}`, { token });
+  },
+  get: (token, id) => api(`/customers/${id}`, { token }),
+  orders: (token, id) => api(`/customers/${id}/orders`, { token }),
+  create: (token, body) => api("/customers", { method: "POST", token, body }),
+  update: (token, id, body) => api(`/customers/${id}`, { method: "PUT", token, body }),
+  remove: (token, id) => api(`/customers/${id}`, { method: "DELETE", token }),
+  bulkRemove: (token, ids) => api("/customers/bulk-delete", { method: "POST", token, body: { ids } }),
+};
+
+export const contactApi = {
+  list: (token, params = {}) => {
+    const query = new URLSearchParams(
+      Object.fromEntries(Object.entries(params).filter(([, value]) => value !== "" && value != null))
+    );
+    const suffix = query.toString() ? `?${query}` : "";
+    return api(`/contact${suffix}`, { token });
+  },
+  get: (token, id) => api(`/contact/${id}`, { token }),
+  update: (token, id, body) => api(`/contact/${id}`, { method: "PATCH", token, body }),
+  remove: (token, id) => api(`/contact/${id}`, { method: "DELETE", token }),
+  bulkRemove: (token, ids) => api("/contact/bulk-delete", { method: "POST", token, body: { ids } }),
 };

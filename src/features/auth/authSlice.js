@@ -10,8 +10,13 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const data = await authApi.login(email, password);
-      if (!panelRoles.includes(data.user?.role)) {
-        throw new Error("This account does not have panel access.");
+      if (!data.user) {
+        throw new Error("Login did not reach the backend. Set REACT_APP_API_URL and rebuild.");
+      }
+      if (!panelRoles.includes(data.user.role)) {
+        throw new Error(
+          `This account (${data.user.role || "no role"}) does not have panel access. Use an admin, staff, or delivery login.`
+        );
       }
       localStorage.setItem(TOKEN_KEY, data.token);
       return data;

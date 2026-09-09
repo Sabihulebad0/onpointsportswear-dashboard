@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { attributeApi, categoryApi, productApi } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
 import RichTextEditor from "../components/RichTextEditor.jsx";
-import { COLOR_OPTIONS, SIZE_OPTIONS } from "../constants/productOptions.js";
+import { COLOR_OPTIONS, ITEM_TYPES, SIZE_OPTIONS } from "../constants/productOptions.js";
 import "./ProductForm.css";
 
 const empty = {
@@ -17,6 +17,7 @@ const empty = {
   sport: "",
   brand: "",
   category: "",
+  type: "standard",
   price: "",
   compareAtPrice: "",
   stock: "0",
@@ -126,6 +127,7 @@ export default function ProductForm({ onSaved, onCancel, embedded = false } = {}
             sport: product.sport || "",
             brand: product.brand || "",
             category: product.category?._id || product.category || "",
+            type: product.type || product.category?.type || "standard",
             price: product.price ?? "",
             compareAtPrice: product.compareAtPrice ?? "",
             stock: product.stock ?? "0",
@@ -481,18 +483,43 @@ export default function ProductForm({ onSaved, onCancel, embedded = false } = {}
 
         <section className="form-section">
           <h3>Inventory</h3>
-          <label>
-            Category
-            <select value={form.category} onChange={(e) => setField("category", e.target.value)} required>
-              <option value="">Select category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                  {category.discountPercent ? ` (${category.discountPercent}% off)` : ""}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="two">
+            <label>
+              Category
+              <select
+                value={form.category}
+                onChange={(e) => {
+                  const categoryId = e.target.value;
+                  const selected = categories.find((item) => item._id === categoryId);
+                  setForm((prev) => ({
+                    ...prev,
+                    category: categoryId,
+                    type: selected?.type || prev.type || "standard",
+                  }));
+                }}
+                required
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                    {category.type === "customizable" ? " · Customizable" : ""}
+                    {category.discountPercent ? ` (${category.discountPercent}% off)` : ""}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Type
+              <select value={form.type} onChange={(e) => setField("type", e.target.value)}>
+                {ITEM_TYPES.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <div className="two">
             <label>
               Price
