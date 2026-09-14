@@ -7,11 +7,58 @@ const API_URL =
     ? localApi
     : "/api");
 
+const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
+
 export class ApiError extends Error {
   constructor(message, status) {
     super(message);
     this.status = status;
   }
+}
+
+export function mediaUrl(url) {
+  if (!url) return "";
+  if (/^(data:|blob:)/i.test(url)) return url;
+  if (/unsplash\.com/i.test(url)) return url;
+  const mediaMatch = String(url).match(/\/api\/media\/(.+?)(?:\?|#|$)/i);
+  if (mediaMatch) return `${API_ORIGIN}/api/media/${mediaMatch[1]}`;
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    const isS3 =
+      /(^|\.)s3([.-]|$)/i.test(host) ||
+      (host.endsWith("amazonaws.com") && host.includes("s3"));
+    if (isS3) {
+      const pathname = decodeURIComponent(parsed.pathname.replace(/^\/+/, ""));
+      const key =
+        host.startsWith("s3.") || host.startsWith("s3-") ? pathname.split("/").slice(1).join("/") : pathname;
+      if (key) {
+        return `${API_ORIGIN}/api/media/${key
+          .split("/")
+          .filter(Boolean)
+          .map((part) => encodeURIComponent(part))
+          .join("/")}`;
+      }
+    }
+    if (/^(localhost|127\.0\.0\.1)$/i.test(parsed.hostname)) {
+      return `${API_ORIGIN}${parsed.pathname}`;
+    }
+  } catch {
+    if (String(url).startsWith("/")) return `${API_ORIGIN}${url}`;
+  }
+  if (String(url).startsWith("/")) return `${API_ORIGIN}${url}`;
+  return url;
+}
+
+function rewriteMedia(value, seen = new WeakSet()) {
+  if (typeof value === "string") return mediaUrl(value);
+  if (!value || typeof value !== "object") return value;
+  if (seen.has(value)) return value;
+  seen.add(value);
+  if (Array.isArray(value)) return value.map((item) => rewriteMedia(item, seen));
+  const out = {};
+  for (const [key, nested] of Object.entries(value)) out[key] = rewriteMedia(nested, seen);
+  return out;
 }
 
 export async function api(path, { method = "GET", body, token, formData } = {}) {
@@ -42,7 +89,7 @@ export async function api(path, { method = "GET", body, token, formData } = {}) 
         : "Request failed";
     throw new ApiError(data.message || fallback, response.status);
   }
-  return data;
+  return rewriteMedia(data);
 }
 
 export const authApi = {

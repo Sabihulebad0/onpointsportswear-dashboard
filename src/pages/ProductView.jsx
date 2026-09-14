@@ -27,8 +27,18 @@ export default function ProductView() {
     productApi.get(id).then(setProduct).catch((err) => setError(err.message));
   }, [id]);
 
-  if (error) return <div className="alert">{error}</div>;
-  if (!product) return <p className="muted">Loading product...</p>;
+  if (error || !product) {
+    return (
+      <div className="product-view product-view-page">
+        <div className="page-head">
+          <Link className="button ghost" to="/products">
+            Back to list
+          </Link>
+        </div>
+        {error ? <div className="alert">{error}</div> : <p className="muted">Loading product...</p>}
+      </div>
+    );
+  }
 
   const gallery = [product.thumbnail, ...(product.images || [])].filter(Boolean);
   const uniqueGallery = [...new Set(gallery)];

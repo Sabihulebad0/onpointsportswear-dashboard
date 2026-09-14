@@ -83,7 +83,7 @@ export default function Login() {
         <button className="login-form__submit" type="submit" disabled={submitting}>
           {submitting ? "Please wait..." : "Login"}
         </button>
-        <AuthLinks />
+        {/* <AuthLinks /> */}
       </form>
     </AuthLayout>
   );

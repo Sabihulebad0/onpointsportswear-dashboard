@@ -1,7 +1,9 @@
 .app-shell {
   display: grid;
   grid-template-columns: 248px 1fr;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background: #f3f4f6;
   transition: grid-template-columns 0.2s ease;
 }
@@ -11,6 +13,9 @@
 }
 
 .app-sidebar {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
   background: #fff;
   color: #111827;
   border-right: 1px solid #eef0f3;
@@ -56,6 +61,10 @@
 .app-sidebar nav {
   display: grid;
   gap: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .app-sidebar a {
@@ -138,9 +147,14 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  overflow: auto;
 }
 
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   background: #fff;
   border-bottom: 1px solid #eef0f3;
   padding: 12px 22px;
@@ -355,12 +369,17 @@
   .app-shell,
   .app-shell.is-collapsed {
     grid-template-columns: 1fr;
+    height: 100vh;
+    height: 100dvh;
   }
 
   .app-sidebar {
     position: fixed;
     inset: 0 auto 0 0;
     width: min(248px, 84vw);
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
     transform: translateX(-110%);
     transition: transform 0.2s ease;
     box-shadow: 8px 0 30px rgba(15, 23, 42, 0.12);

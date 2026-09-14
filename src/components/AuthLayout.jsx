@@ -20,7 +20,7 @@ export function AuthLinks() {
   return (
     <div className="auth-links">
       <Link to="/forgot-password">Forgot your password</Link>
-      {/* <Link to="/register">Create account</Link> */}
+      <Link to="/register">Create account</Link>
     </div>
   );
 }
