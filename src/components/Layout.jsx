@@ -16,7 +16,6 @@ import {
   IconTicket,
   IconUsers,
   IconMail,
-  IconChat,
 } from "./Icons.jsx";
 
 const titles = {
@@ -29,7 +28,6 @@ const titles = {
   "/orders": "Orders",
   "/customers": "Customers",
   "/contacts": "Contact inquiries",
-  "/live-chat": "Live chat",
   // "/cart": "Cart",
   "/coupons": "Coupon",
   "/users": "Users & access",
@@ -90,7 +88,6 @@ export default function Layout() {
           { to: "/orders", label: "Orders", icon: IconBag, show: hasPermission("orders:read") },
           { to: "/customers", label: "Customers", icon: IconUsers },
           { to: "/contacts", label: "Contact Us", icon: IconMail },
-          { to: "/live-chat", label: "Live Chat", icon: IconChat },
           // { to: "/cart", label: "Cart", icon: IconCart },
           { to: "/users", label: "Users", icon: IconUsers, show: hasPermission("users:manage") },
         ]

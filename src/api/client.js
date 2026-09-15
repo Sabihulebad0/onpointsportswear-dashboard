@@ -338,9 +338,3 @@ export const contactApi = {
   bulkRemove: (token, ids) => api("/contact/bulk-delete", { method: "POST", token, body: { ids } }),
 };
 
-export const chatApi = {
-  threads: (token) => api("/chat/threads", { token }),
-  thread: (token, id) => api(`/chat/threads/${id}`, { token }),
-};
-
-export { API_ORIGIN };
