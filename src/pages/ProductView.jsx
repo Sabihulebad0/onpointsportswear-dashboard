@@ -172,11 +172,18 @@ export default function ProductView() {
           <h3>Images</h3>
           {uniqueGallery.length ? (
             <div className="preview-grid preview-grid-lg">
-              {uniqueGallery.map((src) => (
-                <a key={src} href={src} target="_blank" rel="noreferrer">
-                  <img className="preview-400" src={src} alt={product.name} />
-                </a>
-              ))}
+              {uniqueGallery.map((src) => {
+                const video = /\.(mp4|webm|mov|m4v|ogg)(\?|#|$)/i.test(src);
+                return (
+                  <a key={src} href={src} target="_blank" rel="noreferrer">
+                    {video ? (
+                      <video className="preview-400" src={src} controls muted playsInline />
+                    ) : (
+                      <img className="preview-400" src={src} alt={product.name} />
+                    )}
+                  </a>
+                );
+              })}
             </div>
           ) : (
             <p className="muted">No images uploaded.</p>

@@ -76,6 +76,50 @@ const orderTotals = (order) => {
 
 const invoiceNo = (order) => String(order._id || "").slice(-8).toUpperCase();
 
+const itemImage = (item) =>
+  item.customImage || item.image || item.product?.thumbnail || item.product?.images?.[0] || "";
+
+const itemCustomFiles = (item) => {
+  if (!item.custom && item.product?.type !== "customizable") return [];
+  return [item.customImage, item.customLogo, ...(item.customImages || [])]
+    .filter(Boolean)
+    .filter((url, index, list) => list.indexOf(url) === index);
+};
+
+const fileLabel = (url, index, item) => {
+  if (url && url === item.customLogo) return "Uploaded logo";
+  if (url && url === item.customImage) return "Custom design";
+  return `Upload ${index + 1}`;
+};
+
+const fileNameFromUrl = (url, fallback) => {
+  try {
+    const path = new URL(url, window.location.origin).pathname;
+    const base = decodeURIComponent(path.split("/").filter(Boolean).pop() || "");
+    return base || fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const downloadUrl = async (url, filename) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("download failed");
+    const blob = await response.blob();
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(href);
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+};
+
 const trackingIdOf = (order) =>
   order.trackingId || `TRK${String(order._id || "").slice(-10).toUpperCase()}`;
 
@@ -256,12 +300,48 @@ export default function OrderView() {
             {(order.items || []).map((item, index) => {
               const variant = [item.size, colorName(item.color)].filter(Boolean).join(" / ");
               const amount = Number(item.price || 0) * Number(item.quantity || 0);
+              const image = itemImage(item);
+              const uploads = itemCustomFiles(item);
               return (
                 <tr key={`${item.product?._id || item.product || item.productId || index}`}>
                   <td>{index + 1}</td>
                   <td>
-                    <strong>{item.name}</strong>
-                    {variant ? <div className="inv-variant">{variant}</div> : null}
+                    <div className="inv-product">
+                      {image ? <img className="inv-thumb" src={image} alt="" /> : <div className="inv-thumb is-empty" />}
+                      <div>
+                        <strong>{item.name}</strong>
+                        {variant ? <div className="inv-variant">{variant}</div> : null}
+                        {item.custom ? <div className="inv-custom-tag">Customizable · customer upload</div> : null}
+                        {uploads.length ? (
+                          <div className="inv-files">
+                            {uploads.map((url, fileIndex) => {
+                              const label = fileLabel(url, fileIndex, item);
+                              const filename = fileNameFromUrl(
+                                url,
+                                `${String(item.name || "design").replace(/\s+/g, "-")}-${fileIndex + 1}.jpg`
+                              );
+                              return (
+                                <div key={`${url}-${fileIndex}`} className="inv-file">
+                                  <a href={url} target="_blank" rel="noreferrer">
+                                    <img src={url} alt={label} />
+                                  </a>
+                                  <div>
+                                    <span>{label}</span>
+                                    <button
+                                      type="button"
+                                      className="inv-dl"
+                                      onClick={() => downloadUrl(url, filename)}
+                                    >
+                                      Download
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
                   </td>
                   <td className="inv-num">{item.quantity}</td>
                   <td className="inv-num">{format(item.price)}</td>

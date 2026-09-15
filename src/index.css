@@ -307,9 +307,13 @@ textarea { min-height: 96px; resize: vertical; }
 }
 .preview-grid { display: flex; flex-wrap: wrap; gap: 12px; }
 .preview-item { display: grid; gap: 6px; justify-items: start; }
-.preview-item img {
+.preview-item img,
+.preview-item video {
   width: 72px; height: 72px; object-fit: cover;
-  border-radius: 10px; border: 1px solid var(--line);
+  border-radius: 10px; border: 1px solid var(--line); background: #0b1220;
+}
+.preview-item .thumb-preview {
+  width: 140px; height: 140px;
 }
 .toolbar { margin-bottom: 14px; }
 .toolbar input { flex: 1; }

@@ -43,6 +43,15 @@ const empty = {
 
 const fileUrl = (file) => (file ? URL.createObjectURL(file) : "");
 const isHtmlEmpty = (html) => !String(html || "").replace(/<[^>]*>/g, "").trim();
+const isVideoSrc = (src) => /\.(mp4|webm|mov|m4v|ogg)(\?|#|$)/i.test(String(src || ""));
+
+function MediaPreview({ src, className }) {
+  if (!src) return null;
+  if (isVideoSrc(src)) {
+    return <video className={className} src={src} controls muted playsInline />;
+  }
+  return <img className={className} src={src} alt="" />;
+}
 
 const variantKey = (options = []) =>
   options
@@ -327,6 +336,7 @@ export default function ProductForm({ onSaved, onCancel, embedded = false } = {}
       })
     );
     if (existingThumbnail && !thumbnailFile) data.append("existingThumbnail", existingThumbnail);
+    else data.append("existingThumbnail", "");
     data.append("existingImages", JSON.stringify(existingImages));
     if (thumbnailFile) data.append("thumbnail", thumbnailFile);
     galleryFiles.forEach((file) => data.append("images", file));
@@ -710,25 +720,38 @@ export default function ProductForm({ onSaved, onCancel, embedded = false } = {}
         <section className="form-section">
           <h3>Images</h3>
           <p className="muted">
-            Upload a thumbnail and gallery. Files go to S3 when AWS is configured, otherwise they are stored locally.
+            Upload a thumbnail and gallery (images or MP4/WEBM). Removing a file and saving updates the product — the API
+            will drop it.
           </p>
           <label>
             Thumbnail
             <input
               type="file"
-              accept="image/png,image/jpeg,image/webp,image/gif"
+              accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
               onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
             />
           </label>
           {thumbnailPreview ? (
-            <img className="thumb-preview" src={thumbnailPreview} alt="Thumbnail preview" />
+            <div className="preview-item">
+              <MediaPreview src={thumbnailPreview} className="thumb-preview" />
+              <button
+                type="button"
+                className="link danger"
+                onClick={() => {
+                  setThumbnailFile(null);
+                  setExistingThumbnail("");
+                }}
+              >
+                Remove
+              </button>
+            </div>
           ) : null}
           <label>
-            Gallery images
+            Gallery
             <input
               type="file"
               multiple
-              accept="image/png,image/jpeg,image/webp,image/gif"
+              accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
               onChange={(e) => setGalleryFiles(Array.from(e.target.files || []))}
             />
           </label>
@@ -736,18 +759,22 @@ export default function ProductForm({ onSaved, onCancel, embedded = false } = {}
             <div className="preview-grid">
               {galleryPreviews.map((src, index) => (
                 <div key={`${src}-${index}`} className="preview-item">
-                  <img src={src} alt="" />
-                  {index < existingImages.length ? (
-                    <button
-                      type="button"
-                      className="link danger"
-                      onClick={() =>
-                        setExistingImages((current) => current.filter((_, itemIndex) => itemIndex !== index))
+                  <MediaPreview src={src} />
+                  <button
+                    type="button"
+                    className="link danger"
+                    onClick={() => {
+                      if (index < existingImages.length) {
+                        setExistingImages((current) => current.filter((_, itemIndex) => itemIndex !== index));
+                        return;
                       }
-                    >
-                      Remove
-                    </button>
-                  ) : null}
+                      setGalleryFiles((current) =>
+                        current.filter((_, itemIndex) => itemIndex !== index - existingImages.length)
+                      );
+                    }}
+                  >
+                    Remove
+                  </button>
                 </div>
               ))}
             </div>
