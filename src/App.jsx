@@ -24,6 +24,7 @@ import Search from "./pages/Search.jsx";
 import Notifications from "./pages/Notifications.jsx";
 import Attributes from "./pages/Attributes.jsx";
 import Contacts from "./pages/Contacts.jsx";
+import LiveChat from "./pages/LiveChat.jsx";
 
 function Protected({ children }) {
   const { loading, token, canAccessAdmin } = useAuth();
@@ -147,6 +148,14 @@ export default function App() {
           element={
             <StaffOnly>
               <Customers />
+            </StaffOnly>
+          }
+        />
+        <Route
+          path="/live-chat"
+          element={
+            <StaffOnly>
+              <LiveChat />
             </StaffOnly>
           }
         />

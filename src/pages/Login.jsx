@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import AuthLayout, { AuthLinks } from "../components/AuthLayout.jsx";
+import AuthLayout from "../components/AuthLayout.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import logo from "../assets/logo.png";
 import "./Login.css";

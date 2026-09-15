@@ -235,3 +235,11 @@ export function IconTruck() {
     </svg>
   );
 }
+
+export function IconChat() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 6h16v10H8l-4 3V6z" />
+    </svg>
+  );
+}

@@ -1,0 +1,149 @@
+.live-chat {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  min-height: calc(100vh - 140px);
+}
+
+.live-chat__list,
+.live-chat__pane {
+  background: #10151e;
+  border: 1px solid #243044;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.live-chat__status {
+  padding: 12px 16px;
+  color: #7cff3a;
+  font-weight: 700;
+  border-bottom: 1px solid #243044;
+}
+
+.live-chat__thread {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #1b2433;
+  color: #fff;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.live-chat__thread span {
+  color: #8b93a7;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-chat__thread.is-on {
+  background: #162033;
+}
+
+.live-chat__pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.live-chat__pane header {
+  padding: 16px;
+  border-bottom: 1px solid #243044;
+}
+
+.live-chat__pane h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+}
+
+.live-chat__pane header p {
+  margin: 4px 0 0;
+  color: #8b93a7;
+}
+
+.live-chat__messages {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.live-chat__bubble {
+  max-width: 72%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #1b2230;
+  color: #fff;
+}
+
+.live-chat__bubble.is-staff {
+  align-self: flex-end;
+  background: #0f3d24;
+}
+
+.live-chat__bubble.is-system {
+  align-self: center;
+  background: #141a24;
+  color: #8b93a7;
+}
+
+.live-chat__bubble small {
+  display: block;
+  color: #9aa3b5;
+  margin-bottom: 4px;
+}
+
+.live-chat__bubble p {
+  margin: 0;
+}
+
+.live-chat__typing {
+  margin: 0 16px 8px;
+  color: #8b93a7;
+}
+
+.live-chat__pane form {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid #243044;
+}
+
+.live-chat__pane input {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid #2a3344;
+  background: #0b1018;
+  color: #fff;
+  padding: 0 12px;
+}
+
+.live-chat__pane button {
+  border: 0;
+  border-radius: 12px;
+  background: #00ab3a;
+  color: #fff;
+  font-weight: 700;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.live-chat__empty {
+  color: #8b93a7;
+  padding: 24px;
+}
+
+@media (max-width: 900px) {
+  .live-chat {
+    grid-template-columns: 1fr;
+  }
+}
